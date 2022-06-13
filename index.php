@@ -12,31 +12,52 @@
     {
         public $name;
         public $genere;
-        public $voto;
-        public $maggiorrenni;
+        public $voti = [];
 
-        function __construct($_name, $_genere, $_voto = [], $_maggiorenni)
+        function __construct($_name, $_genere)
         {
           $this->name = $_name;
           $this->genere = $_genere;
-          $this->voto = $_voto;
-          $this->maggiorenni = $_maggiorenni;  
+        }
+
+        public function insertVoto($voto)
+        {
+            $this->voti[] = $voto;
+        }
+
+        public function mediaVoto()
+        {
+            $sum = array_sum($this->voti);
+
+            return $sum / count($this->voti);
         }
 
         public function getFullName(){
-            return "Il nome del film è" . $this->name . "il genere è" . $this->genere . "<br>" . "Il voto medio è " . $this->voto . "su 5, è un film";
+            return "Il nome del film è" . $this->name . "il genere è" . $this->genere . "<br>" . "Il voto medio è " . $this->mediaVoto() . "su 5, è un film";
         }
+    }
 
-    } 
+    $film_1 = new Movie ("Jurasic World:Il Dominio", "Aventuroso");
+    $film_2 = new Movie ("Top Gun: Maverick", "Azione");
+    $film_3 = new Movie ("Nostalgia", "Amoroso");
 
-    $film_1 = new Movie ("Jurasic World:Il Dominio", "Aventuroso", 3, 17);
-    $film_2 = new Movie ("Top Gun: Maverick", "Azione", 4, 17);
-    $film_3 = new Movie ("Nostalgia", "Amoroso", 5, 18);
+    $film_1->insertVoto(4);
+    $film_1->insertVoto(5);
+    $film_1->insertVoto(4);
 
-    $selectionFilms =[];
-    $selectionFilms = $film_1;
-    $selectionFilms = $film_2;
-    $selectionFilms = $film_3;
+    $film_2->insertVoto(2);
+    $film_2->insertVoto(3);
+    $film_2->insertVoto(3);
+
+
+    $film_3->insertVoto(4);
+    $film_3->insertVoto(4);
+    $film_3->insertVoto(4);
+
+    $selectionFilms = [];
+    $selectionFilms[] = $film_1;
+    $selectionFilms[] = $film_2;
+    $selectionFilms[] = $film_3;
 ?>
 
 <ul>
